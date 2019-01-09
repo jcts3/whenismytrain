@@ -1,0 +1,22 @@
+{
+  "name": "whenismytrain",
+  "version": "1.0.0",
+  "description": "traintime display",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcts3/whenismytrain.git"
+  },
+  "keywords": [
+    "rtt"
+  ],
+  "author": "James Stratford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jcts3/whenismytrain/issues"
+  },
+  "homepage": "https://github.com/jcts3/whenismytrain#readme"
+}
