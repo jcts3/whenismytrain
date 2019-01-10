@@ -17,13 +17,21 @@ exports.getStation = (station) => {
     if (err) {
       console.log(err.message);
     }
-    body = JSON.parse(body)
+    body = JSON.parse(body);
     console.log(body);
     return JSON.parse(body);
     // Gets here too late - need to promisify!!!
   }).auth(creds.Username, creds.Password, true);
-}
-const a = exports.getStation(prefStation);
+};
+
+exports.getStationInfo = station => exports.getStation(station).location;
+
+exports.getStationNextTrains = station => exports.getStation(station).services;
+
+exports.getStationTrainNum = (station, num) => exports.getStationNextTrains(station)[num];
+
+exports.getStationNextTrain = station => exports.getStationTrainNum(station, 0);
+
 
 console.log(a);
 // module.exports = {
