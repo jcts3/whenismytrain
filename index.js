@@ -3,6 +3,7 @@ const info = require('./info.json');
 
 const prefStations = info['Preferred Stations'];
 const prefStation = prefStations[0];
+const destStation = prefStations[1];
 const creds = info.credentials;
 const apiEP = info.Endpoint;
 
@@ -53,10 +54,24 @@ exports.getStationNextTrain = (station, cb) => exports.getStationNextTrains(stat
 exports.getTrainLocationDetail = train => train.locationDetail;
 // const stationPromise = (exports.getStationNextTrain(prefStation.CR));
 
+const getRoute = (origin, destination) => {
+  return new Promise((resolve, reject) => {
+    const address = `https://${apiEP}json/search/${origin.CRS}/to/${destination.CRS}`;
+    request.get(address, (err, response, body) => {
+      if (err) {
+        console.log(err.message);
+        reject(err);
+      }
+      console.log(JSON.parse(body));
+      resolve(JSON.parse(body));
+    }).auth(creds.Username, creds.Password, true);
+  });
+};
 
 // TESTING AREA
 
-exports.getStationNextTrain(prefStation, (train) => {
-  // console.log(train);
-  console.log(exports.getTrainLocationDetail(train));
-});
+// exports.getStationNextTrain(prefStation, (train) => {
+//   // console.log(train);
+//   console.log(exports.getTrainLocationDetail(train));
+// });
+getRoute(prefStation, destStation);
