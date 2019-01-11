@@ -68,10 +68,20 @@ const getRoute = (origin, destination) => {
   });
 };
 
+exports.getRouteOnly = (origin, destination, cb) => {
+  const promise = getRoute(origin, destination);
+  promise.then((result) => {
+    cb(result);
+  });
+};
+
+
 // TESTING AREA
 
 // exports.getStationNextTrain(prefStation, (train) => {
 //   // console.log(train);
 //   console.log(exports.getTrainLocationDetail(train));
 // });
-getRoute(prefStation, destStation);
+exports.getRouteOnly(prefStation, destStation, (res) => {
+  console.log(res);
+});
