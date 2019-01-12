@@ -2,8 +2,8 @@ const request = require('request');
 const info = require('./info.json');
 
 const prefStations = info['Preferred Stations'];
-const prefStation = prefStations[0];
-const destStation = prefStations[1];
+const prefStation = prefStations[1];
+const destStation = prefStations[2];
 const creds = info.credentials;
 const apiEP = info.Endpoint;
 
@@ -75,6 +75,25 @@ exports.getRouteOnly = (origin, destination, cb) => {
   });
 };
 
+exports.getRouteNextServices = (origin, destination, num = -1, cb) => {
+  const promise = getRoute(origin, destination);
+  promise.then((body) => {
+    if (num > -1) {
+      cb(body.services[num]);
+    } else {
+      cb(body.services);
+    }
+  });
+};
+
+exports.getRouteNumService = (origin, destination, num, cb) => {
+  return exports.getRouteNextServices(origin, destination, num, cb);
+};
+
+
+exports.getRouteNextService = (origin, destination, cb) => {
+  exports.getRouteNextServices(origin, destination, 0, cb);
+}
 
 // TESTING AREA
 
@@ -82,6 +101,6 @@ exports.getRouteOnly = (origin, destination, cb) => {
 //   // console.log(train);
 //   console.log(exports.getTrainLocationDetail(train));
 // });
-exports.getRouteOnly(prefStation, destStation, (res) => {
+exports.getRouteNextService(prefStation, destStation, (res) => {
   console.log(res);
 });
