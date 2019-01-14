@@ -7,20 +7,18 @@ const destStation = prefStations[2];
 const creds = info.credentials;
 const apiEP = info.Endpoint;
 
-const getStation = (station) => {
-  return new Promise((resolve, reject) => {
-    const address = `https://${apiEP}/json/search/${station.CRS}`;
-    request.get(address, (err, response, body) => {
-      if (err) {
-        console.log(err.message);
-        reject(err);
-      }
-      // console.log(JSON.parse(body));
-      resolve(JSON.parse(body));
-      // Gets here too late - need to promisify!!!
-    }).auth(creds.Username, creds.Password, true);
-  });
-};
+const getStation = station => new Promise((resolve, reject) => {
+  const address = `https://${apiEP}/json/search/${station.CRS}`;
+  request.get(address, (err, response, body) => {
+    if (err) {
+      console.log(err.message);
+      reject(err);
+    }
+    // console.log(JSON.parse(body));
+    resolve(JSON.parse(body));
+    // Gets here too late - need to promisify!!!
+  }).auth(creds.Username, creds.Password, true);
+});
 
 exports.getStationOnly = (station, cb) => {
   const promise = getStation(station);
@@ -54,19 +52,19 @@ exports.getStationNextTrain = (station, cb) => exports.getStationNextTrains(stat
 exports.getTrainLocationDetail = train => train.locationDetail;
 // const stationPromise = (exports.getStationNextTrain(prefStation.CR));
 
-const getRoute = (origin, destination) => {
-  return new Promise((resolve, reject) => {
-    const address = `https://${apiEP}json/search/${origin.CRS}/to/${destination.CRS}`;
-    request.get(address, (err, response, body) => {
-      if (err) {
-        console.log(err.message);
-        reject(err);
-      }
-      console.log(JSON.parse(body));
-      resolve(JSON.parse(body));
-    }).auth(creds.Username, creds.Password, true);
-  });
-};
+/* ROUTES */
+
+const getRoute = (origin, destination) => new Promise((resolve, reject) => {
+  const address = `https://${apiEP}json/search/${origin.CRS}/to/${destination.CRS}`;
+  request.get(address, (err, response, body) => {
+    if (err) {
+      console.log(err.message);
+      reject(err);
+    }
+    console.log(JSON.parse(body));
+    resolve(JSON.parse(body));
+  }).auth(creds.Username, creds.Password, true);
+});
 
 exports.getRouteOnly = (origin, destination, cb) => {
   const promise = getRoute(origin, destination);
@@ -86,14 +84,12 @@ exports.getRouteNextServices = (origin, destination, num = -1, cb) => {
   });
 };
 
-exports.getRouteNumService = (origin, destination, num, cb) => {
-  return exports.getRouteNextServices(origin, destination, num, cb);
-};
+exports.getRouteNumService = (origin, destination, num, cb) => exports.getRouteNextServices(origin, destination, num, cb);
 
 
 exports.getRouteNextService = (origin, destination, cb) => {
   exports.getRouteNextServices(origin, destination, 0, cb);
-}
+};
 
 // TESTING AREA
 
