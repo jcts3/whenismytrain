@@ -25,6 +25,7 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "dependencies": {
+    "moment": "^2.23.0",
     "request": "^2.88.0"
   }
 }
