@@ -1,3 +1,7 @@
+const stationInfo = require('./stationInfo');
+const routeInfo = require('./routeInfo');
+const serviceInfo = require('./serviceInfo');
+
 const info = require('./info.json');
 
 const prefStations = info['Preferred Stations'];
@@ -8,8 +12,6 @@ exports.creds = creds;
 const apiEP = info.Endpoint;
 exports.apiEP = apiEP;
 
-const stationInfo = require('./stationInfo');
-const routeInfo = require('./routeInfo');
 // TESTING AREA
 
 // exports.getStationNextTrain(prefStation, (train) => {
@@ -22,5 +24,6 @@ routeInfo.getRouteNextService(prefStation, destStation, (res) => {
 
 exports = {
   stationInfo,
-  routeInfo
+  routeInfo,
+  serviceInfo,
 };
