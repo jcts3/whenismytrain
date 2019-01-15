@@ -1,8 +1,8 @@
 const request = require('request');
-const {
-  apiEP,
-  creds,
-} = require('./index');
+const info = require('./info.json');
+
+const apiEP = info.Endpoint;
+const creds = info.credentials;
 
 /* ROUTES */
 const getRoute = (origin, destination) => new Promise((resolve, reject) => {

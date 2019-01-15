@@ -1,8 +1,8 @@
 const request = require('request');
-const {
-  apiEP,
-  creds,
-} = require("./index");
+const info = require('./info.json');
+
+const apiEP = info.Endpoint;
+const creds = info.credentials;
 
 const getStation = station => new Promise((resolve, reject) => {
   const address = `https://${apiEP}/json/search/${station.CRS}`;
