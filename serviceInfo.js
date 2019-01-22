@@ -25,7 +25,7 @@ exports.getDayObject = date => moment(date).format('YYYY/MM/DD');
 
 const getService = service => new Promise((resolve, reject) => {
   const d = exports.getDayObject(Date.now());
-  const address = `https://${apiEP}/json/service/${service.SUID}/${d}`;
+  const address = `https://${apiEP}/json/service/${service.serviceUid}/${d}`;
   request.get(address, (err, response, body) => {
     if (err) {
       debug(err.message);
