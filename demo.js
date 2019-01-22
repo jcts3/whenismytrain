@@ -21,6 +21,12 @@ rtt.serviceInfo.getServiceAll(faveService, (res) => {
 rtt.stationInfo.getStationNextTrain(prefStation, (res) => {
   // debug(res);
 });
+// Returns detailed info on next service between 2 stations
+rtt.routeInfo.getRouteNextService(prefStation, destStation, (service) => {
+  rtt.serviceInfo.getServiceAll(service, (serviceInfo) => {
+    debug(serviceInfo);
+  });
+});
 
 
 // when is my train
