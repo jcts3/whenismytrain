@@ -1,4 +1,5 @@
 const request = require('request');
+const debug = require('debug')('stationInfo');
 const info = require('./info.json');
 
 const apiEP = info.Endpoint;
@@ -8,10 +9,10 @@ const getStation = station => new Promise((resolve, reject) => {
   const address = `https://${apiEP}/json/search/${station.CRS}`;
   request.get(address, (err, response, body) => {
     if (err) {
-      console.log(err.message);
+      debug(err.message);
       reject(err);
     }
-    // console.log(JSON.parse(body));
+    // debug(JSON.parse(body));
     resolve(JSON.parse(body));
     // Gets here too late - need to promisify!!!
   }).auth(creds.Username, creds.Password, true);

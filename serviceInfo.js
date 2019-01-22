@@ -1,5 +1,6 @@
 const request = require('request');
 const moment = require('moment');
+const debug = require('debug')('serviceInfo');
 const info = require('./info.json');
 
 const creds = info.credentials;
@@ -27,10 +28,10 @@ const getService = service => new Promise((resolve, reject) => {
   const address = `https://${apiEP}/json/service/${service.SUID}/${d}`;
   request.get(address, (err, response, body) => {
     if (err) {
-      console.log(err.message);
+      debug(err.message);
       reject(err);
     }
-    // console.log(JSON.parse(body));
+    // debug(JSON.parse(body));
     resolve(JSON.parse(body));
   }).auth(creds.Username, creds.Password, true);
 });
@@ -43,6 +44,6 @@ exports.getServiceAll = (service, cb) => {
 };
 
 exports.getServiceAll(faveService, (res) => {
-  console.log(res);
+  debug(res);
   res;
 });

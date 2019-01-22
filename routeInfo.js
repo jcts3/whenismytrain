@@ -1,4 +1,5 @@
 const request = require('request');
+const debug = require('debug')('routeInfo');
 const info = require('./info.json');
 
 const apiEP = info.Endpoint;
@@ -9,10 +10,10 @@ const getRoute = (origin, destination) => new Promise((resolve, reject) => {
   const address = `https://${apiEP}json/search/${origin.CRS}/to/${destination.CRS}`;
   request.get(address, (err, response, body) => {
     if (err) {
-      console.log(err.message);
+      debug(err.message);
       reject(err);
     }
-    console.log(JSON.parse(body));
+    debug(JSON.parse(body));
     resolve(JSON.parse(body));
   }).auth(creds.Username, creds.Password, true);
 });

@@ -4,7 +4,8 @@
   "description": "traintime display",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "DEBUG='*' node demo.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "moment": "^2.23.0",
     "request": "^2.88.0"
   }
