@@ -34,6 +34,13 @@ exports.getRouteNextServices = (origin, destination, num = -1, cb) => {
   });
 };
 exports.getRouteNumService = (origin, destination, num, cb) => exports.getRouteNextServices(origin, destination, num, cb);
+
 exports.getRouteNextService = (origin, destination, cb) => {
   exports.getRouteNextServices(origin, destination, 0, cb);
+};
+
+exports.getRouteNextServiceID = (origin, destination, cb) => {
+  exports.getRouteNextServices(origin, destination, 0, (service) => {
+    cb(service.serviceUid);
+  });
 };
