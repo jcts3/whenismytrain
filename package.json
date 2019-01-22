@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "DEBUG='*' node demo.js"
+    "start": "DEBUG='*' node app.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,9 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "debug": "^4.1.1",
+    "express": "^4.16.4",
     "moment": "^2.23.0",
     "request": "^2.88.0"
   }
