@@ -42,4 +42,3 @@ exports.getServiceAll = (service, cb) => {
     cb(body);
   });
 };
-
