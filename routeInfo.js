@@ -13,7 +13,7 @@ const getRoute = (origin, destination) => new Promise((resolve, reject) => {
       debug(err.message);
       reject(err);
     }
-    debug(JSON.parse(body));
+    // debug(JSON.parse(body));
     resolve(JSON.parse(body));
   }).auth(creds.Username, creds.Password, true);
 });

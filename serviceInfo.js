@@ -43,7 +43,3 @@ exports.getServiceAll = (service, cb) => {
   });
 };
 
-exports.getServiceAll(faveService, (res) => {
-  debug(res);
-  res;
-});
