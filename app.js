@@ -17,6 +17,7 @@ serviceRouter.get('/:dept/:dest/departureinfo', (req, res, next) => {
       // res.json(serviceInfo);
       const { locations } = serviceInfo;
       const resp = {
+        requestType: "when is my next train",
         serviceID: service.serviceUid,
         yourRequestInfo: {
           departureStation: deptStation,
@@ -41,6 +42,10 @@ serviceRouter.get('/:dept/:dest/departureinfo', (req, res, next) => {
       resp.departTime = {
         expectedDepartureTime: locInfo.gbttBookedDeparture,
         actualDepartureTime: locInfo.realtimeDeparture,
+      };
+      resp.platform = {
+        platformNumber: locInfo.platform,
+        'platformConfirmed?': locInfo.platformConfirmed,
       };
       res.json(resp);
     });
