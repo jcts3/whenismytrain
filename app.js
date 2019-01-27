@@ -10,13 +10,38 @@ const app = express();
 const serviceRouter = express.Router();
 
 serviceRouter.get('/:dept/:dest/departureinfo', (req, res, next) => {
-  const origStation = req.params.dept;
+  const deptStation = req.params.dept;
   const destStation = req.params.dest;
-  rtt.routeInfo.getRouteNextService(origStation, destStation, (service) => {
-    rtt.serviceInfo.getServiceAll(service, (serviceInfo) => {
+  rtt.routeInfo.getRouteNextService(deptStation, destStation, (service) => {
+    rtt.serviceInfo.getServiceAll(service, async (serviceInfo) => {
       // res.json(serviceInfo);
-      const resp = {};
-      resp.trainArrivesAtDept = (serviceInfo.locations).prototype.filter(element => element.crs === origStation);
+      const { locations } = serviceInfo;
+      const resp = {
+        serviceID: service.serviceUid,
+        yourRequestInfo: {
+          departureStation: deptStation,
+          destinationStation: destStation,
+        },
+        trainRouteInfo: {
+          originStation: serviceInfo.origin[0].description,
+          finalStation: serviceInfo.destination[0].description,
+        },
+      };
+      const locInfoArr = await locations.filter(element => element.crs === deptStation);
+      const locInfo = locInfoArr[0];
+      if (locInfo.displayAs === 'ORIGIN') {
+        // future work - check if there's existing train coming into same platform here! 
+        resp.arrivalTime = 'n/a - Origin Station';
+      } else {
+        resp.arrivalTime = {
+          expectedArrivalTime: locInfo.gbttBookedArrival,
+          actualArrivalTime: locInfo.realtimeArrival,
+        };
+      }
+      resp.departTime = {
+        expectedDepartureTime: locInfo.gbttBookedDeparture,
+        actualDepartureTime: locInfo.realtimeDeparture,
+      };
       res.json(resp);
     });
   });
@@ -43,4 +68,4 @@ app.listen(port, () => {
 // key details: 
 //     DEPT TIMES: departure time, arrival time (dept stat), delay?, delay length,
 //     ARRIV TIMES: arrival time (dest stat), delay?, delay length
-//     ROUTE INFO: dept platform #, origin, final destination, dest platfrom #
+//     ROUTE INFO: dept platform #, origin, final destination, dest platfrom
