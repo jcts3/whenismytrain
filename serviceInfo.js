@@ -23,16 +23,27 @@ exports.getTodayObject = () => exports.getDayObject(Date.now());
 
 exports.getDayObject = date => moment(date).format('YYYY/MM/DD');
 
-const getService = service => new Promise((resolve, reject) => {
-  const d = exports.getDayObject(Date.now());
+const getService = (service, date = Date.now()) => new Promise((resolve, reject) => {
+  const d = exports.getDayObject(date);
   const address = `https://${apiEP}/json/service/${service.serviceUid}/${d}`;
-  request.get(address, (err, response, body) => {
+  request.get(address, (err, response, textBody) => {
     if (err) {
       debug(err.message);
       reject(err);
     }
+    const body = JSON.parse(textBody);
     // debug(JSON.parse(body));
-    resolve(JSON.parse(body));
+    if (body.error) {
+      debug(body.error);
+      if (body.error === 'No schedule found') {
+        // getService(service, date.setTime(date.getTime() + 1 * 86400000));
+        resolve(getService(service, date + 1 * 86400000));
+      } else {
+        reject(body.error);
+      }
+    } else {
+      resolve(body);
+    }
   }).auth(creds.Username, creds.Password, true);
 });
 
