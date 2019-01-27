@@ -33,6 +33,7 @@ async function departureInfoFromService(serviceInfo, service, deptStation, destS
       departureStation: deptStation,
       destinationStation: destStation,
     },
+    dateOfTrain: serviceInfo.runDate,
     trainRouteInfo: {
       originStation: serviceInfo.origin[0].description,
       finalStation: serviceInfo.destination[0].description,
@@ -40,7 +41,7 @@ async function departureInfoFromService(serviceInfo, service, deptStation, destS
   };
   resp = await getOriginStationInfo(locations, deptStation, resp);
   return resp;
-};
+}
 
 exports.getDepartureInfo = (req, res, next) => {
   const deptStation = req.params.dept;
@@ -56,7 +57,12 @@ exports.getDepartureInfo = (req, res, next) => {
 
 exports.getDepartureInfoFromService = (req, res, next) => {
   const service = {
-    serviceUid: req.params.serviceID
+    serviceUid: req.params.serviceID,
   };
+  const deptStation = req.params.dept;
+  const destStation = req.params.dest;
+  rtt.serviceInfo.getServiceAll(service, async (serviceInfo) => {
+    const resp = await departureInfoFromService(serviceInfo, service, deptStation, destStation);
+    res.json(resp);
+  });
 };
-

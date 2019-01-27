@@ -13,7 +13,7 @@ const serviceRouter = express.Router();
 
 serviceRouter.get('/:dept/:dest/departureinfo', deptInfoController.getDepartureInfo);
 
-
+serviceRouter.get('/:dept/:dest/:serviceID', deptInfoController.getDepartureInfoFromService);
 
 serviceRouter.get('/:dept/:dest/', (req, res, next) => {
   const prefStation = req.params.dept;
