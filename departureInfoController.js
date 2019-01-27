@@ -1,10 +1,32 @@
 const rtt = require('./index');
 
+async function getOriginStationInfo(locations, deptStation, response) {
+  const locInfoArr = await locations.filter(element => element.crs === deptStation);
+  const locInfo = locInfoArr[0];
+  const resp = response;
+  if (locInfo.displayAs === 'ORIGIN') {
+    // future work - check if there's existing train coming into same platform here!
+    resp.arrivalTime = 'n/a - Origin Station';
+  } else {
+    resp.arrivalTime = {
+      timetableArrivalTime: locInfo.gbttBookedArrival,
+      actualArrivalTime: locInfo.realtimeArrival,
+    };
+  }
+  resp.departTime = {
+    timetableDepartureTime: locInfo.gbttBookedDeparture,
+    actualDepartureTime: locInfo.realtimeDeparture,
+  };
+  resp.platform = {
+    platformNumber: locInfo.platform,
+    'platformConfirmed?': locInfo.platformConfirmed,
+  };
+  return resp;
+}
+
 async function departureInfoFromService(serviceInfo, service, deptStation, destStation) {
-  const {
-    locations
-  } = serviceInfo;
-  const resp = {
+  const { locations } = serviceInfo;
+  let resp = {
     requestType: 'when is my next train',
     serviceID: service.serviceUid,
     yourRequestInfo: {
@@ -16,25 +38,7 @@ async function departureInfoFromService(serviceInfo, service, deptStation, destS
       finalStation: serviceInfo.destination[0].description,
     },
   };
-  const locInfoArr = await locations.filter(element => element.crs === deptStation);
-  const locInfo = locInfoArr[0];
-  if (locInfo.displayAs === 'ORIGIN') {
-    // future work - check if there's existing train coming into same platform here!
-    resp.arrivalTime = 'n/a - Origin Station';
-  } else {
-    resp.arrivalTime = {
-      expectedArrivalTime: locInfo.gbttBookedArrival,
-      actualArrivalTime: locInfo.realtimeArrival,
-    };
-  }
-  resp.departTime = {
-    expectedDepartureTime: locInfo.gbttBookedDeparture,
-    actualDepartureTime: locInfo.realtimeDeparture,
-  };
-  resp.platform = {
-    platformNumber: locInfo.platform,
-    'platformConfirmed?': locInfo.platformConfirmed,
-  };
+  resp = await getOriginStationInfo(locations, deptStation, resp);
   return resp;
 };
 
@@ -49,3 +53,10 @@ exports.getDepartureInfo = (req, res, next) => {
     });
   });
 };
+
+exports.getDepartureInfoFromService = (req, res, next) => {
+  const service = {
+    serviceUid: req.params.serviceID
+  };
+};
+
