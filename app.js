@@ -17,7 +17,7 @@ serviceRouter.get('/:dept/:dest/departureinfo', (req, res, next) => {
       // res.json(serviceInfo);
       const { locations } = serviceInfo;
       const resp = {
-        requestType: "when is my next train",
+        requestType: 'when is my next train',
         serviceID: service.serviceUid,
         yourRequestInfo: {
           departureStation: deptStation,
@@ -31,7 +31,7 @@ serviceRouter.get('/:dept/:dest/departureinfo', (req, res, next) => {
       const locInfoArr = await locations.filter(element => element.crs === deptStation);
       const locInfo = locInfoArr[0];
       if (locInfo.displayAs === 'ORIGIN') {
-        // future work - check if there's existing train coming into same platform here! 
+        // future work - check if there's existing train coming into same platform here!
         resp.arrivalTime = 'n/a - Origin Station';
       } else {
         resp.arrivalTime = {
@@ -70,7 +70,7 @@ app.listen(port, () => {
 });
 
 
-// key details: 
+// key details:
 //     DEPT TIMES: departure time, arrival time (dept stat), delay?, delay length,
 //     ARRIV TIMES: arrival time (dest stat), delay?, delay length
 //     ROUTE INFO: dept platform #, origin, final destination, dest platfrom
