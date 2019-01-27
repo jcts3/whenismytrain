@@ -50,6 +50,7 @@ exports.getDepartureInfo = (req, res, next) => {
     rtt.serviceInfo.getServiceAll(service, async (serviceInfo) => {
       // res.json(serviceInfo);
       const resp = await departureInfoFromService(serviceInfo, service, deptStation, destStation);
+      res.status(202);
       res.json(resp);
     });
   });
@@ -63,6 +64,7 @@ exports.getDepartureInfoFromService = (req, res, next) => {
   const destStation = req.params.dest;
   rtt.serviceInfo.getServiceAll(service, async (serviceInfo) => {
     const resp = await departureInfoFromService(serviceInfo, service, deptStation, destStation);
+    res.status(200);
     res.json(resp);
   });
 };
