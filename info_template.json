@@ -1,0 +1,36 @@
+{
+    "credentials": {
+        "Username": "PUT_YOUR_RTT_USERNAME_HERE",
+        "Password": "PUT_YOUR_RTT_PASSWORD_HERE"
+    },
+    "Endpoint": "api.rtt.io/api/v1",
+    "Preferred Stations": [
+        {
+            "Station": "London Liverpool Street",
+            "CRS": "LST",
+            "TIPLOC": "LIVST"
+        },
+        {
+            "Station": "Tottenham Hale",
+            "CRS": "TOM",
+            "TIPLOC": "TTNHMHL"
+        },
+        {
+            "Station": "Stansted Airport",
+            "CRS": "SSD",
+            "TIPLOC": "STANAIR"
+        }
+    ],
+    "FaveServices":[
+        {
+            "id": "1B93",
+            "serviceUid": "L29326",
+            "route": "evening plane home"
+        },
+        {
+            "id": "2B02",
+            "serviceUid": "L27524",
+            "route": "catch morning flight"
+        }
+    ]
+}
