@@ -30,4 +30,5 @@ app.use(serviceRouter);
 
 app.listen(port, () => {
   debug(`listening on port ${chalk.green(port)}`);
+  console.log(`Now listening on port ${port}`);
 });
