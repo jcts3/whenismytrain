@@ -50,3 +50,9 @@ If you set up bookmarks, (or once the app is further developed), it can be usefu
 - [ ] Describe API -> Swagger?
 - [ ] Look at separating out api as separate npm library + build front end to utilise it
 - [ ] Batch file to autocreate info.json file?
+- [ ] Re-order file structure to tidy up 
+
+## Expansion
+- [ ] A UI! Don't just display it as basic JSON - React???
+- [ ] A setup procedure - either a script that runs when first initialised, or an API point of /setup, where you can enter your favourite stations, particular trains, etc.
+- [ ] A lookup service - potensh just for stations to start with - either expose it as just a page, or store in a database. 
