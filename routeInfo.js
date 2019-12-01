@@ -7,8 +7,8 @@ const creds = info.credentials;
 
 /* ROUTES */
 const getRoute = (origin, destination) => new Promise((resolve, reject) => {
-  // const address = `https://${apiEP}json/search/${origin.CRS}/to/${destination.CRS}`;
-  const address = `https://${apiEP}json/search/${origin}/to/${destination}`;
+  // const address = `https://${apiEP}/json/search/${origin.CRS}/to/${destination.CRS}`;
+  const address = `https://${apiEP}/json/search/${origin}/to/${destination}`;
   request.get(address, (err, response, body) => {
     if (err) {
       debug(err.message);
